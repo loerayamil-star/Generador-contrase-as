@@ -35,11 +35,9 @@ python interfaz.py
 
 ## Por qué `secrets` y no `random`
 
-El módulo `random` de Python está diseñado para simulaciones y juegos, **no para seguridad**. Utiliza un generador pseudoaleatorio que puede ser predecible si se conoce la semilla.
+El módulo `random` de Python está diseñado para simulaciones y juegos, **no para seguridad**, utiliza un generador pseudoaleatorio que puede ser predecible si se conoce la semilla.
 
-El módulo `secrets` usa fuentes de entropía del sistema operativo (como `/dev/urandom` en Linux/macOS) para producir valores verdaderamente impredecibles. Esto es fundamental para contraseñas: si un atacante pudiera predecir la secuencia de números aleatorios, podría reproducir la contraseña generada.
-
-**Regla práctica**: siempre que generes tokens, contraseñas o claves de seguridad, usa `secrets`.
+El módulo `secrets` usa fuentes de entropía del sistema operativo (como `/dev/urandom` en Linux/macOS) para producir valores verdaderamente impredecibles. Esto es fundamental para contraseñas, si un atacante pudiera predecir la secuencia de números aleatorios, podría reproducir la contraseña generada.
 
 ## Nota educativa
 
