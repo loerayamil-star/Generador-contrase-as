@@ -1,10 +1,14 @@
+import re
 import secrets
 import string
-import re
 
 # generador de contraseña segura ===================================================
 
+
 def generar_contraseña(longitud=16, mayusculas=True, numeros=True, simbolos=True) -> str:
+    if longitud <= 0:
+        raise ValueError("longitud debe ser mayor a 0")
+
     alfabeto = string.ascii_lowercase
 
     if mayusculas:
@@ -13,7 +17,7 @@ def generar_contraseña(longitud=16, mayusculas=True, numeros=True, simbolos=Tru
         alfabeto += string.digits
     if simbolos:
         alfabeto += string.punctuation
-    
+
     caracteres = []
 
     for _ in range(longitud):
@@ -29,7 +33,7 @@ def evaluar_contraseña(contraseña: str) -> dict:
         'longitud': len(contraseña) >= 8,
         'mayusculas': bool(re.search(r'[A-Z]', contraseña)),
         'numeros': bool(re.search(r'\d', contraseña)),
-        'simbolos': bool(re.search(r'[!@#$%^&*(),.?":{}|<>]', contraseña)),
+        'simbolos': bool(re.search(f'[{re.escape(string.punctuation)}]', contraseña)),
         'minusculas': bool(re.search(r'[a-z]', contraseña))
     }
 
@@ -63,9 +67,6 @@ def evaluar_contraseña(contraseña: str) -> dict:
     else:
         nivel = "Débil"
 
+    puntuacion = max(0, puntuacion)
+
     return {"puntuacion": puntuacion, "nivel": nivel, "razones": razones}
-
-
-
-
-

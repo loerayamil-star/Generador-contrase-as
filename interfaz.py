@@ -1,8 +1,9 @@
 import tkinter as tk
 from tkinter import ttk
+
 import pyperclip
 
-from generador import generar_contraseña, evaluar_contraseña
+from generador import evaluar_contraseña, generar_contraseña
 
 
 def construir_ventana():
@@ -23,7 +24,7 @@ def construir_ventana():
         longitud_var.set(round(float(valor)))
 
     ttk.Scale(root, from_=8, to=64, variable=longitud_var,
-          orient="horizontal", command=actualizar_longitud).pack()
+              orient="horizontal", command=actualizar_longitud).pack()
 
     tk.Label(root, textvariable=longitud_var).pack()
 
@@ -57,8 +58,11 @@ def construir_ventana():
     def copiar():
         contraseña = contraseña_var.get()
         if contraseña:
-            pyperclip.copy(contraseña)
-            copiado_var.set("Copiado")
+            try:
+                pyperclip.copy(contraseña)
+                copiado_var.set("Copiado")
+            except pyperclip.PyperclipException:
+                copiado_var.set("Error al copiar al portapapeles")
             root.after(2000, lambda: copiado_var.set(""))
 
     tk.Button(root, text="Copiar", command=copiar).pack()
