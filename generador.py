@@ -25,51 +25,45 @@ def generar_contraseña(longitud=16, mayusculas=True, numeros=True, simbolos=Tru
 # criterios a evaluar para la seguridad de la contraseña ===========================
 
 def evaluar_contraseña(contraseña: str) -> dict:
-      criterios = {
-          'longitud': len(contraseña) >= 8,
-          'mayusculas': bool(re.search(r'[A-Z]', contraseña)),
-          'numeros': bool(re.search(r'\d', contraseña)),
-          'simbolos': bool(re.search(r'[!@#$%^&*(),.?":{}|<>]', contraseña)),
-          'minusculas': bool(re.search(r'[a-z]', contraseña))
-      }
-      
-      razones = []
-      puntuacion = 100
-      cumplido = all(criterios.values())
-      
-      
-      if len(contraseña) < 8:
-              razones.append('La contraseña es muy corta')
-              puntuacion -= 25
-      if not re.search(r'[A-Z]', contraseña):
-              razones.append('La contraseña no contiene mayúsculas')
-              puntuacion -= 25
-      if not re.search(r'\d', contraseña):
-              razones.append('La contraseña no contiene números')
-              puntuacion -= 25
-      if not re.search(r'[!@#$%^&*(),.?":{}|<>]', contraseña):
-              razones.append('La contraseña no contiene símbolos')
-              puntuacion -= 25
-      if not re.search(r'[a-z]', contraseña):
-              razones.append('La contraseña no contiene minúsculas')
-              puntuacion -= 25
-          
+    criterios = {
+        'longitud': len(contraseña) >= 8,
+        'mayusculas': bool(re.search(r'[A-Z]', contraseña)),
+        'numeros': bool(re.search(r'\d', contraseña)),
+        'simbolos': bool(re.search(r'[!@#$%^&*(),.?":{}|<>]', contraseña)),
+        'minusculas': bool(re.search(r'[a-z]', contraseña))
+    }
+
+    razones = []
+    puntuacion = 100
+
+    if not criterios['longitud']:
+        razones.append('La contraseña es muy corta')
+        puntuacion -= 25
+    if not criterios['mayusculas']:
+        razones.append('La contraseña no contiene mayúsculas')
+        puntuacion -= 25
+    if not criterios['numeros']:
+        razones.append('La contraseña no contiene números')
+        puntuacion -= 25
+    if not criterios['simbolos']:
+        razones.append('La contraseña no contiene símbolos')
+        puntuacion -= 25
+    if not criterios['minusculas']:
+        razones.append('La contraseña no contiene minúsculas')
+        puntuacion -= 25
+
 # Puntuacion o nivel de la contraseña ==================================================
 
-      if puntuacion >= 80:
+    if puntuacion >= 80:
         nivel = "Muy fuerte"
-      elif puntuacion >= 60:
+    elif puntuacion >= 60:
         nivel = "Fuerte"
-      elif puntuacion >= 40:
+    elif puntuacion >= 40:
         nivel = "Media"
-      else:
+    else:
         nivel = "Débil"
 
-      return {"puntuacion": puntuacion, "nivel": nivel, "razones": razones}
-
-
-    
-      
+    return {"puntuacion": puntuacion, "nivel": nivel, "razones": razones}
 
 
 
